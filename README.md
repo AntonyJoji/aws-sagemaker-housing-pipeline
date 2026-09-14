@@ -30,30 +30,30 @@ flowchart LR
 ------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------
 Detailed Description
+
+
 Objectives
 
-Automate the deployment and serving of a Scikit-Learn regression model in production.
-
-Ensure real-time response generation over secure HTTPS.
-
-Notify operators or subscribed users immediately via automated alerts when new valuations are produced.
-
-Implement a 100% serverless cloud footprint that incurs zero idle compute charges.
+> Automate the deployment and serving of a Scikit-Learn regression model in production.
+>Ensure real-time response generation over secure HTTPS.
+>Notify operators or subscribed users immediately via automated alerts when new valuations are produced.
+>Implement a 100% serverless cloud footprint that incurs zero idle compute charges.
 
 Key Features
-Serverless Inference: Hosted on an Amazon SageMaker Serverless Endpoint with 2048 MB memory and max concurrency configured to 2. It automatically scales to zero instances when traffic ceases.
 
-Synchronous & Asynchronous Flow: Provides instantaneous HTTP responses back to calling clients while simultaneously publishing notification payloads asynchronously to Amazon SNS.
+>Serverless Inference: Hosted on an Amazon SageMaker Serverless Endpoint with 2048 MB memory and max concurrency configured to 2. It automatically scales to zero instances when traffic ceases.
 
-Resilient Ingestion: The Lambda parser normalizes multiple incoming request schemas (nested JSON dictionaries as well as raw numeric matrices).
+>Synchronous & Asynchronous Flow: Provides instantaneous HTTP responses back to calling clients while simultaneously publishing notification payloads asynchronously to Amazon SNS.
 
-CORS Enabled: API Gateway includes Cross-Origin Resource Sharing headers for seamless integration with web browsers and dashboards.
+>Resilient Ingestion: The Lambda parser normalizes multiple incoming request schemas (nested JSON dictionaries as well as raw numeric matrices).
+
+>CORS Enabled: API Gateway includes Cross-Origin Resource Sharing headers for seamless integration with web browsers and dashboards.
 
 Design Decisions
 
-SageMaker Serverless over Provisioned Real-Time Instances: Provisioned real-time instances (ml.m5.large) incur continuous hourly charges 24/7. Serverless endpoints bill strictly per millisecond of compute time during request execution.
+> SageMaker Serverless over Provisioned Real-Time Instances: Provisioned real-time instances (ml.m5.large) incur continuous hourly charges 24/7. Serverless endpoints bill strictly per millisecond of compute time during request execution.
 
-AWS Lambda as Central Controller: Decouples API Gateway and SageMaker, enabling schema validation, dynamic alert formatting, and error handling without coupling the client directly to ML infrastructure.
+> AWS Lambda as Central Controller: Decouples API Gateway and SageMaker, enabling schema validation, dynamic alert formatting, and error handling without coupling the client directly to ML infrastructure.
 
 Tech Stack
 
@@ -79,12 +79,14 @@ aws-sagemaker-housing-pipeline/
     └── test_client.py                         # Standalone Python client script to query API Gateway
 
 Setup & Installation Steps
+
 Prerequisites
-An active AWS Account with administrative or sufficient IAM privileges for SageMaker, Lambda, S3, SNS, and API Gateway.
 
-Python 3.10+ installed locally or access to Google Colab.
+>An active AWS Account with administrative or sufficient IAM privileges for SageMaker, Lambda, S3, SNS, and API Gateway.
 
-AWS CLI configured locally (aws configure) or environment credentials set inside your testing environment.
+>Python 3.10+ installed locally or access to Google Colab.
+
+>AWS CLI configured locally (aws configure) or environment credentials set inside your testing environment.
 
 1. Model Artifact Preparation
 The model must be bundled with an entry script into an archive named model.tar.gz:
@@ -225,7 +227,7 @@ sm.delete_model(ModelName="rf-housing-model-resolved")
 
 print("SageMaker endpoint resources deleted successfully.")
 ------------------------------------------------------------------------------------------------
-Author Information
-Author: Antony Joji
-GitHub: @AntonyJoji
-Project Repository: aws-sagemaker-housing-pipeline
+> Author Information
+> Author: Antony Joji
+> GitHub: @AntonyJoji
+> Project Repository: aws-sagemaker-housing-pipeline
