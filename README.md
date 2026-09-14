@@ -1,49 +1,29 @@
-# Serverless House Price Prediction & Automated Alert Pipeline on AWS
-
-An end-to-end, event-driven machine learning inference and automated notification pipeline built on Amazon Web Services (AWS).
-
----
-
 ## Architecture Diagram
 
 The system architecture follows a decoupled, serverless microservice pattern deployed in the `ap-south-1` (Mumbai) region:
 
 ```mermaid
 flowchart LR
-    subgraph Client["Client Tier"]
-        Colab["Google Colab / External Client"]
-    end
-
-    subgraph AWS["AWS Cloud (ap-south-1)"]
-        APIGW["Amazon API Gateway\n(REST API /prod)"]
-        
-        subgraph Compute["Compute & Orchestration"]
-            Lambda["AWS Lambda\n(Trigger-Endpoint)"]
-        end
-
-        subgraph ML["Machine Learning Layer"]
-            S3[("Amazon S3\n(model.tar.gz)")]
-            Endpoint["SageMaker Serverless Endpoint\n(rf-housing-endpoint)"]
-        end
-
-        subgraph Messaging["Notification Layer"]
-            SNS["Amazon SNS Topic\n(house-price-alerts)"]
-        end
-    end
-
-    subgraph EndUser["Subscriber"]
-        Email["Verified Email Inbox"]
-    end
+    Colab["Google Colab / Client"]
+    APIGW["Amazon API Gateway\n(REST API /prod)"]
+    Lambda["AWS Lambda\n(Trigger-Endpoint)"]
+    S3[("Amazon S3\n(model.tar.gz)")]
+    Endpoint["SageMaker Serverless Endpoint\n(rf-housing-endpoint)"]
+    SNS["Amazon SNS Topic\n(house-price-alerts)"]
+    Email["Verified Email Inbox"]
 
     Colab -->|1. POST JSON Payload| APIGW
-    APIGW -->|2. Lambda Proxy Integration| Lambda
-    S3 -.->|Loads Model Artifact| Endpoint
-    Lambda -->|3. sagemaker:InvokeEndpoint| Endpoint
-    Endpoint -->|4. Return Prediction Vector| Lambda
-    Lambda -->|5. sns:Publish Alert| SNS
-    SNS -->|6. Deliver Notification Email| Email
-    Lambda -->|7. Return HTTP 200 JSON| APIGW
+    APIGW -->|2. Lambda Proxy| Lambda
+    S3 -.->|Loads Model| Endpoint
+    Lambda -->|3. InvokeEndpoint| Endpoint
+    Endpoint -->|4. Prediction Output| Lambda
+    Lambda -->|5. Publish Alert| SNS
+    SNS -->|6. Deliver Email| Email
+    Lambda -->|7. HTTP 200 JSON| APIGW
     APIGW -->|8. Formatted Response| Colab
+```
+
+## Detailed Description
 
 
 
