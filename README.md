@@ -55,20 +55,22 @@ Design Decisions
 
 > AWS Lambda as Central Controller: Decouples API Gateway and SageMaker, enabling schema validation, dynamic alert formatting, and error handling without coupling the client directly to ML infrastructure.
 
-Tech Stack
+## Tech Stack
 
-Domain               Technology / Tool                         Version / Spec
-Language             Python                                    3.10+ / 3.12
-Machine Learning     Scikit-learn, NumPy, Pandas               Scikit-learn 1.2-1
-Cloud Hosting        Amazon SageMaker                          Serverless Inference
-Serverless Compute   AWS Lambda                                Python 3.12 Runtime
-API Management       Amazon API Gateway                        Regional REST API
-Messaging & Alerts   Amazon Simple Notification Service        Standard Topic
-Object Storage       Amazon S3                                 Standard Storage Class
-SDK & Invocations    Boto3, Requests                           Latest
+| Domain | Technology / Tool | Version / Spec |
+| :--- | :--- | :--- |
+| **Language** | Python | 3.10+ / 3.12 |
+| **Machine Learning** | Scikit-learn, NumPy, Pandas | Scikit-learn 1.2-1 |
+| **Cloud Hosting** | Amazon SageMaker | Serverless Inference |
+| **Serverless Compute** | AWS Lambda | Python 3.12 Runtime |
+| **API Management** | Amazon API Gateway | Regional REST API |
+| **Messaging & Alerts** | Amazon Simple Notification Service | Standard Topic |
+| **Object Storage** | Amazon S3 | Standard Storage Class |
+| **SDK & Invocations** | Boto3, Requests | Latest |
 
+## Folder/Module Structure
 
-Folder/Module Structure
+```text
 aws-sagemaker-housing-pipeline/
 ├── README.md                                  # Project documentation and architecture guide
 ├── intership_email_house_predition.ipynb      # End-to-end training, deployment & test notebook
